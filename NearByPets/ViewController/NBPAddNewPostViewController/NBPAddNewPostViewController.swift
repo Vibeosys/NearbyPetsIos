@@ -224,7 +224,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
             if types.count > 1{
                 self.downPicker?.setValueAtIndex(self.adPostModel.selectedTypeIndex)
                 
-                print(self.downPicker?.selectedIndex)
             }
             self.downPicker?.setPlaceholder("Choose Type")
             
@@ -347,7 +346,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         
         
-        print(row)
     }
 
     
@@ -387,7 +385,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
         }
         
         self.tableView?.reloadData()
-        print(info)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -407,8 +404,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
         let location = locations.last! as CLLocation
         let coord = location.coordinate
         
-        print(coord.latitude)
-        print(coord.longitude)
         if   isLocationUpdate == false{
             
             //            self.getProductList()
@@ -479,12 +474,10 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
 
         let registrationPara = NBPRequestHelper.createRequest(nil, serviceName : "GetCategory")
         
-        print (registrationPara)
         
         Alamofire.request(.POST, BASE_URL, parameters:registrationPara, encoding: .JSON)
             .responseString { response in
                 
-                debugPrint(response)
                 
                 let mapper = Mapper<NBPCategoryModel>()
                 let mappedObject = mapper.map(response.result.value)
@@ -502,7 +495,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
                     self.showAlert("Error", message: response.result.error?.localizedDescription)
                 }
                 
-                print(mappedObject);
         }
     }
     
@@ -542,12 +534,10 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
         
         let registrationPara = NBPRequestHelper.createRequest(nil, serviceName : "GetTypes")
         
-        print (registrationPara)
         
         Alamofire.request(.POST, BASE_URL, parameters:registrationPara, encoding: .JSON)
             .responseString { response in
                 
-                debugPrint(response)
                 
                 let mapper = Mapper<NBPAdPostTypesModel>()
                 let mappedObject = mapper.map(response.result.value)
@@ -568,7 +558,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
                     self.showAlert("Error", message: response.result.error?.localizedDescription)
                 }
                 
-                print(mappedObject);
         }
     }
     
@@ -642,7 +631,10 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
         let type = self.types[typeIndex]
         
         self.adPostModel.typeId = type.typeId
-        self.adPostModel.descriptionIos = (self.descriptiontextField?.text)!
+        let newString = (self.descriptiontextField?.text)!.stringByReplacingOccurrencesOfString(" ", withString:"", options: NSStringCompareOptions.LiteralSearch, range: nil)
+
+        
+        self.adPostModel.descriptionIos = newString
         self.adPostModel.title = (self.titleTextField?.text)!
         self.adPostModel.address = self.address
         if self.adPostModel.isDisplayFullAddress == true{
@@ -660,12 +652,10 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
         
         let registrationPara = NBPRequestHelper.createRequest(self.adPostModel, serviceName : "PostAdIos")
         
-        print (registrationPara)
         
         Alamofire.request(.POST, BASE_URL, parameters:registrationPara, encoding: .JSON)
             .responseString { response in
                 
-                debugPrint(response)
                 
                 let mapper = Mapper<NBPAdPostTypesModel>()
                 let mappedObject = mapper.map(response.result.value)
@@ -686,11 +676,24 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
                     self.showAlert("Error", message: response.result.error?.localizedDescription)
                 }
                 
-                print(mappedObject);
         }
     }
 
 
+    
+    func textView(textView: UITextView,
+                    shouldChangeTextInRange range: NSRange,
+                                            replacementText text: String) -> Bool
+    {
+        var shouldChangeChar = true
+
+        if text == "\n"
+        {
+           shouldChangeChar = false
+        }
+        
+        return shouldChangeChar
+    }
     
     
     

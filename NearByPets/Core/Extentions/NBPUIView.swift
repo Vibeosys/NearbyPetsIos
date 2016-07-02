@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 
 
 @IBDesignable class NBPUIView: UIView {
@@ -77,15 +77,21 @@ import UIKit
 
 extension UIImageView {
     public func imageFromUrl(urlString: String) {
-        if let url = NSURL(string: urlString) {
-            let request = NSURLRequest(URL: url)
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
-                (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
-                if let imageData = data as NSData? {
-                    self.image = UIImage(data: imageData)
-                }
-            }
+        
+        Alamofire.request(.GET,urlString).response { (request, response, data, error) in
+            self.image = UIImage(data: data!, scale:1)
         }
+        
+        
+//        if let url = NSURL(string: urlString) {
+//            let request = NSURLRequest(URL: url)
+//            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
+//                (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+//                if let imageData = data as NSData? {
+//                    self.image = UIImage(data: imageData)
+//                }
+//            }
+//        }
     }
 }
 

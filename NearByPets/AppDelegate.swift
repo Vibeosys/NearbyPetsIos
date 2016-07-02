@@ -13,6 +13,8 @@ import AlamofireNetworkActivityIndicator
 import FBSDKCoreKit
 //import FBSDKShareKit
 import FBSDKLoginKit
+import Fabric
+import Crashlytics
 
 var kRootViewController : NBPRootViewController =  UIApplication.sharedApplication().keyWindow?.rootViewController as! NBPRootViewController
 var kNavigationController: UINavigationController = kRootViewController.rootViewController as! UINavigationController
@@ -33,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Attach Nuke to NetworkActivityIndicatorManager
         
         IQKeyboardManager.sharedManager().enable = true
+        Fabric.with([Crashlytics.self])
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 //            - See more at: http://www.theappguruz.com/blog/facebook-integration-using-swift#sthash.mOzoe4Wy.dpuf
 //        return true

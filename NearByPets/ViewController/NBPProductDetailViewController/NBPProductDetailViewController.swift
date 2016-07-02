@@ -48,6 +48,8 @@ class NBPProductDetailViewController: UIViewController,CLLocationManagerDelegate
     
     override func viewDidAppear(animated: Bool)
     {
+        
+        
         super.viewDidAppear(true)
         let bounds = UIScreen.mainScreen().bounds
         height = bounds.size.height
@@ -94,10 +96,60 @@ class NBPProductDetailViewController: UIViewController,CLLocationManagerDelegate
             imageView.image = UIImage(named:"default_pet_image.jpg")
             imageView.imageFromUrl(self.createImageName(index))
             
+            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(NBPProductDetailViewController.imageTapped(_:)))
+            imageView.userInteractionEnabled = true
+            imageView.addGestureRecognizer(tapGestureRecognizer)
+            
             self.scrollView! .addSubview(imageView)
         }
         
     }
+    
+    func imageTapped(img: AnyObject)
+    {
+        
+        self.performSegueWithIdentifier("NBPImageViewerController", sender: self)
+
+//        
+//        let viewController = UIViewController()
+//        let tappedImageView = img.view!
+//        
+//        let imageView = UIImageView(image: tappedImageView as? UIImage)
+//        
+//        viewController.view.addSubview(imageView)
+//        self.presentViewController(viewController, animated: true) { 
+//            
+//        }
+        
+        
+    }
+    
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        // MARK: - Navigation
+        if (segue.identifier == "NBPImageViewerController") {
+            
+            self.productDetail?.images
+            
+            if let viewController: NBPImageViewerController = segue.destinationViewController as? NBPImageViewerController {
+                
+                let imageUrl = self.productDetail?.images[(self.pageControl?.currentPage)!] as! String
+                
+                viewController.imageUrlString = imageUrl
+            }
+        }
+            
+
+        
+    }
+
+    
+    
     
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView)
@@ -299,13 +351,12 @@ class NBPProductDetailViewController: UIViewController,CLLocationManagerDelegate
                 "comgooglemaps://?saddr=&daddr=\(productDetail!.latitude),\(productDetail!.longitude)&directionsmode=driving")!)
             
         } else {
-            
-//            UIApplication.sharedApplication().openURL(NSURL(string:s
-//                "comgooglemaps://?saddr=&daddr=\(place.latitude),\(place.longitude)&directionsmode=driving")!)
-//            
-//            NSString *string = [NSString stringWithFormat:@"http://maps.apple.com/?ll=%f,%f",self.latitude,self.longitude];
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
-            
+        
+            if locationManager.location != nil {
+            UIApplication.sharedApplication().openURL(NSURL (string: "http://maps.apple.com/maps?saddr=\(locationManager.location!.coordinate.latitude),\(locationManager.location!.coordinate.latitude)&daddr=\(productDetail!.latitude),\(productDetail!.longitude)")!)
+            }else {
+                    UIApplication.sharedApplication().openURL(NSURL (string: "http://maps.apple.com/maps?saddr=&daddr=\(productDetail!.latitude),\(productDetail!.longitude)")!)
+            }
         }
     }
     

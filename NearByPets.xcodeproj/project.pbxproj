@@ -50,6 +50,7 @@
 		DF32A8811D0C85310054B1BE /* NBPSettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF32A8801D0C85310054B1BE /* NBPSettingModel.swift */; };
 		DF79A4641D0F1F1D005B118C /* NBPProductDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF79A4631D0F1F1D005B118C /* NBPProductDetail.swift */; };
 		DF8506EC1D166EF500D27327 /* NBPWebServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8506EB1D166EF500D27327 /* NBPWebServices.swift */; };
+		DF868BAB1D27BC4800D578B1 /* NBPImageViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF868BAA1D27BC4800D578B1 /* NBPImageViewerController.swift */; };
 		DF98F6641D0898B500F57C81 /* NBPMyPostedAdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF98F6631D0898B500F57C81 /* NBPMyPostedAdsViewController.swift */; };
 		DF98F6671D0898F100F57C81 /* NBPMyPostedAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF98F6661D0898F100F57C81 /* NBPMyPostedAdCell.swift */; };
 		DFB2DA211D1D93E500156FA8 /* NSDateExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB2DA201D1D93E500156FA8 /* NSDateExtention.swift */; };
@@ -137,6 +138,7 @@
 		DF32A8801D0C85310054B1BE /* NBPSettingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBPSettingModel.swift; sourceTree = "<group>"; };
 		DF79A4631D0F1F1D005B118C /* NBPProductDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBPProductDetail.swift; sourceTree = "<group>"; };
 		DF8506EB1D166EF500D27327 /* NBPWebServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBPWebServices.swift; sourceTree = "<group>"; };
+		DF868BAA1D27BC4800D578B1 /* NBPImageViewerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBPImageViewerController.swift; sourceTree = "<group>"; };
 		DF98F6631D0898B500F57C81 /* NBPMyPostedAdsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBPMyPostedAdsViewController.swift; sourceTree = "<group>"; };
 		DF98F6661D0898F100F57C81 /* NBPMyPostedAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBPMyPostedAdCell.swift; sourceTree = "<group>"; };
 		DFB2DA201D1D93E500156FA8 /* NSDateExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtention.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 			children = (
 				DF0986391D158BC20095F201 /* Cell */,
 				DFC78D061D02D89E00244E8D /* NBPProductDetailViewController.swift */,
+				DF868BAA1D27BC4800D578B1 /* NBPImageViewerController.swift */,
 			);
 			path = NBPProductDetailViewController;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 				DFD40EC41CFDF64900A16EEE /* Resources */,
 				7AC3051B6A503497782DEC20 /* 📦 Embed Pods Frameworks */,
 				98F66828F61D18EAEB617EE2 /* 📦 Copy Pods Resources */,
+				DF868BA91D275CED00D578B1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -726,6 +730,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearByPets/Pods-NearByPets-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DF868BA91D275CED00D578B1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" c3af44db2a1ccd5febc5565a6c75294a2603a5d3 9309ab3b1638a1e0640ad87e9adc39f0585e5eac0165568075b7928eb83977fa";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -746,6 +763,7 @@
 				DF32A8471D0BAF2F0054B1BE /* NBPRequestHelper.swift in Sources */,
 				DFC78D071D02D89E00244E8D /* NBPProductDetailViewController.swift in Sources */,
 				DF98F6641D0898B500F57C81 /* NBPMyPostedAdsViewController.swift in Sources */,
+				DF868BAB1D27BC4800D578B1 /* NBPImageViewerController.swift in Sources */,
 				DFFD15C21D1AFD2D00A9D2D4 /* NBPBaseTableViewController.swift in Sources */,
 				DF0986421D15BBF60095F201 /* NBPAdPostPriceCell.swift in Sources */,
 				DF09864A1D15CEC80095F201 /* NBPAdPostTypesModel.swift in Sources */,
@@ -904,6 +922,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Andronikos Papanicolaou (F6G9X5BG7N)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andronikos Papanicolaou (F6G9X5BG7N)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = NearByPets/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

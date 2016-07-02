@@ -17,7 +17,7 @@ class LeftMenuController: UITableViewController, CLLocationManagerDelegate  {
 //@property (strong, nonatomic) UIColor *tintColor;
     
     var arrayOfStrings: [String] = ["","Home","My Profile", "My Favorite Ads", "My Posted Ads","View Categories", "Post a new ad","Setting","Logout"]
-    var arrayOfIcons: [String] = ["","report","howuft", "knowmoreaboutit", "anxiety","tress", "depression","report","video","logout"]
+    var arrayOfIcons: [String] = ["","home_Menu", "ic_perm_identity_black_24dp", "ic_perm_media","ic_slideshow", "ic_send","ic_send","ic_settings","ic_action_io"]
 
     
     let locationManager = CLLocationManager()
@@ -112,6 +112,7 @@ class LeftMenuController: UITableViewController, CLLocationManagerDelegate  {
         }
         else if indexPath.row == 2 {
             
+
             let userinfo = NBPUserHelper.sharedInstance
 
             let registrationPara = NBPRequestHelper.createRequest(userinfo.userInfo()! ,serviceName : "GetProfile")

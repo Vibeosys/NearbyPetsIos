@@ -314,10 +314,6 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
             
         }
         
-        
-        print(indexPath)
-        print(rowCount)
-        
         var productDetail =  NBPProductDetail()
         
         self.canShowFacebookAd(indexPath)
@@ -337,11 +333,9 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
         switch sortBy {
         case .DateDesc, .DateAsc:
             let datePro = self.dateSortedProducts[indexPath.section]
-            if datePro.products!.count > rowCount {
-                
-                rowCount = indexPath.row - indexPath.row / NBPUserHelper.facebookAdAfterRow()
-                
-                let index = self.sortedProductIndex(indexPath)
+            
+            let index = self.sortedProductIndex(indexPath)
+            if datePro.products!.count > index {
                 productDetail = datePro.products![index]
                 cell.dateLabel?.text = ""
             }
@@ -365,6 +359,7 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
         cell.icon!.image = UIImage(named:"default_pet_image.jpg")
         cell.favButton?.selected = false
         cell.icon!.imageFromUrl(productDetail.image)
+        
         print(productDetail.image)
 
         
@@ -926,8 +921,15 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
 
                     }else{
                         self.canLoadMoreData = false
+                        
+                        if (self.pageNumber != 0){
+                            self.showAlert("Info", message:"Sorry, no more add found.")
 
-                        self.showAlert("Error", message:mappedObject?.error?.errorMsg )
+                            
+                        }else{
+                            self.showAlert("Error", message:mappedObject?.error?.errorMsg )
+   
+                        }
                         
                     }
                 }else{

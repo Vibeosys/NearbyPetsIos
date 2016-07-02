@@ -19,6 +19,8 @@ target 'NearByPets' do
     pod 'FBSDKCoreKit'
     pod 'FBSDKShareKit'
     pod 'FBSDKLoginKit'
+    pod 'Fabric'
+    pod 'Crashlytics'
 
     
 
