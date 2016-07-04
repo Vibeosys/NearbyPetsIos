@@ -12,6 +12,7 @@ import ObjectMapper
 import CoreLocation
 import BTNavigationDropdownMenu
 import FBAudienceNetwork
+import MBProgressHUD
 
 enum adsType {
     
@@ -372,7 +373,7 @@ class NBPMyPostedAdsViewController: NBPBaseViewController,CLLocationManagerDeleg
         
         let cell : NBPFacebookAdCell =  self.tableView!.dequeueReusableCellWithIdentifier("FacebookAd", forIndexPath: indexPath) as! NBPFacebookAdCell
         
-        let adView: FBAdView = FBAdView(placementID:"1715459422041023_1722420858011546", adSize:kFBAdSizeHeight50Banner, rootViewController:self);
+        let adView: FBAdView = FBAdView(placementID:NBPUserHelper.getFacebookPlaementId(), adSize:kFBAdSizeHeight50Banner, rootViewController:self);
         
         adView.loadAd();
         cell.addSubview(adView);

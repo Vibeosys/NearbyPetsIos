@@ -4,6 +4,7 @@
 #import <LGSideMenuController/LGSideMenuController.h>
 #import <DownPicker/DownPicker.h>
 #import "VSDropdown.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 //#import <FBSDKLoginKit/FBSDKLoginKit.h>

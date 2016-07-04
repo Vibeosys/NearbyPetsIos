@@ -21,6 +21,7 @@ target 'NearByPets' do
     pod 'FBSDKLoginKit'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'MBProgressHUD', '~> 0.9.2'
 
     
 

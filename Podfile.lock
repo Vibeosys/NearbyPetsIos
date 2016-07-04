@@ -24,6 +24,7 @@ PODS:
     - FBSDKCoreKit
   - IQKeyboardManagerSwift (4.0.2)
   - LGSideMenuController (1.0.10)
+  - MBProgressHUD (0.9.2)
   - ObjectMapper (1.1.5)
   - SwiftValidator (3.0.3)
 
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - IQKeyboardManagerSwift
   - LGSideMenuController (~> 1.0.0)
+  - MBProgressHUD (~> 0.9.2)
   - ObjectMapper (= 1.1.5)
   - SwiftValidator (= 3.0.3)
 
@@ -61,9 +63,10 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 2d1746144cfc8a9dbbd24997c34ee0471be51b6a
   IQKeyboardManagerSwift: 2f2c19c509f67c4c0df2826db54033d3e090ce65
   LGSideMenuController: 8682bdbd0008c1acfbce95eaf96cc3657bca5f95
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   ObjectMapper: 528b1a6677a6acac7747edd508576983e76a9148
   SwiftValidator: 0b6a48bf10364411b0d64c97f78665ff87ca9f8b
 
-PODFILE CHECKSUM: a0d8458e5e5acbe00ccec54092ed558dad7d41a5
+PODFILE CHECKSUM: 146dcf7fc689166985190e7220edc73fd325ec89
 
 COCOAPODS: 1.0.0

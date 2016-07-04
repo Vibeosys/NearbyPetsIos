@@ -12,6 +12,7 @@ import Alamofire
 import ObjectMapper
 import CoreLocation
 import DLRadioButton
+import MBProgressHUD
 
 enum selectedImageNumber {
     case First, Second, Third, None
@@ -81,6 +82,7 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.getAddressFromLocation()
         isLocationUpdate = false
         
     }
@@ -397,41 +399,38 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
     
     // MARK: - locationManager delegate
     
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
-        
-        let location = locations.last! as CLLocation
-        let coord = location.coordinate
-        
-        if   isLocationUpdate == false{
-            
-            //            self.getProductList()
-            isLocationUpdate = true
-            self.getAddressFromLocation(location)
 
-            
+
+    
+    func getAddressFromLocation(){
+
+    
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .NotDetermined, .Restricted, .Denied:
+                print("No access")
+                self.showAlert("Info", message:"Please allow location services." )
+                return
+            case .AuthorizedAlways, .AuthorizedWhenInUse:
+                print("Access")
+            }
+        } else {
+            self.showAlert("Info", message:"Please enable location services." )
+            return
         }
         
-        self.locationManager.stopUpdatingLocation()
+//        let latitude: CLLocationDegrees = 34.7026311
+//        let longitude: CLLocationDegrees = 33.0855445
         
-    }
-    
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+//        let clientLocation: CLLocation = CLLocation(latitude: latitude,
+//                                              longitude: longitude)
         
-        print(error)
-    }
-
-    
-    func getAddressFromLocation(location: CLLocation){
-    
-//    var longitude :CLLocationDegrees = -122.0312186
-//    var latitude :CLLocationDegrees = 37.33233141
-//    
-//    var location = CLLocation(latitude: latitude, longitude: longitude) //changed!!!
-    print(location)
-    
+        
+        
+        if locationManager.location != nil {
+            let location = locationManager.location!
+        
+            
         CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
         print(location)
         
@@ -444,7 +443,13 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
             let pm = placemarks![0]
                 let addressDetail = pm.addressDictionary!["FormattedAddressLines"] as! [String]
                 
-                let city = pm.subAdministrativeArea!
+                var city = ""
+                if pm.subAdministrativeArea != nil {
+                    city = pm.subAdministrativeArea!
+                }else if pm.administrativeArea != nil{
+                    city = pm.administrativeArea!
+                }
+                
                 
                  self.address = addressDetail.joinWithSeparator(", ")
                 self.adPostModel.city = city
@@ -456,6 +461,7 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
                 print("Problem with the data received from geocoder")
             }
         })
+        }
     
     }
     /*
@@ -568,9 +574,6 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
     
     func uploadAdPostData() {
         
-        
-//        let descripCell : NBPTitleDescriptionCell = tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! NBPTitleDescriptionCell
-        
         let priceCell : NBPAdPostPriceCell = tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as! NBPAdPostPriceCell
         
         
@@ -592,6 +595,7 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
             return
         }
         
+        self.adPostModel.images.removeAll()
         
         let fImage = NBPImageInfo()
         fImage.imageId = 1
@@ -645,18 +649,43 @@ class NBPAddNewPostViewController: NBPBaseViewController,UIImagePickerController
             self.adPostModel.isAddress = 1
         }
         
-        self.adPostModel.latitude = String(locationManager.location!.coordinate.latitude)
-        self.adPostModel.longitude = String(locationManager.location!.coordinate.longitude)
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .NotDetermined, .Restricted, .Denied:
+                print("No access")
+                 self.showAlert("Info", message:"Please allow location services." )
+                return
+            case .AuthorizedAlways, .AuthorizedWhenInUse:
+                print("Access")
+
+                if locationManager.location != nil {
+                    self.adPostModel.latitude = String(locationManager.location!.coordinate.latitude)
+                    self.adPostModel.longitude = String(locationManager.location!.coordinate.longitude)
+                }
+                
+            }
+        } else {
+            self.showAlert("Info", message:"Please enable location services." )
+            return
+        }
+
+        
+        
+
+        
         self.adPostModel.price = (priceCell.priceTextField?.text)!
         self.adPostModel.userId = NBPUserHelper.sharedInstance.userInfo()!.userid
         
         let registrationPara = NBPRequestHelper.createRequest(self.adPostModel, serviceName : "PostAdIos")
         
+        let progressHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        progressHUD.labelText = "Uploading  Ad..."
         
         Alamofire.request(.POST, BASE_URL, parameters:registrationPara, encoding: .JSON)
             .responseString { response in
                 
-                
+                progressHUD.hide(false)
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: false)
                 let mapper = Mapper<NBPAdPostTypesModel>()
                 let mappedObject = mapper.map(response.result.value)
 //                self.types =  (mappedObject?.dataObject)!
