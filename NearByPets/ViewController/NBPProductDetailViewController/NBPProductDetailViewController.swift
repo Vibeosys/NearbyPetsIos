@@ -188,6 +188,8 @@ class NBPProductDetailViewController: UIViewController,CLLocationManagerDelegate
             
         cell.price?.text = "€ " +   String(format: "%.02f", Float(productDetail!.price)!)
             
+        }else{
+            cell.price?.text = "€ " 
         }
 //        cell.distance?.text = String(format: "%.01f", self.distance) + " km away from you"  //"The velocity is \(productDetail.distance.string(1))"
         cell.productDescription?.text = String(productDetail!.productDesc)

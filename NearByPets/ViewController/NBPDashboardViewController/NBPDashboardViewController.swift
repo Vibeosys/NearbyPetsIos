@@ -325,7 +325,10 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
             }
             
         default:
-            if  (indexPath.row % NBPUserHelper.facebookAdAfterRow()) == 0 && indexPath.row != 0  {
+            
+            let row = indexPath.row + 1
+            
+            if  (row % (NBPUserHelper.facebookAdAfterRow() + 1)) == 0 && indexPath.row != 0  {
                 return self.showFacebookAd(indexPath)
             }
         }
@@ -341,7 +344,10 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
             }
             
         default:
-            rowCount = indexPath.row - indexPath.row / NBPUserHelper.facebookAdAfterRow()
+            
+            let rowIndex = indexPath.row + 1
+            rowCount = rowIndex - rowIndex / (NBPUserHelper.facebookAdAfterRow() + 1)
+            rowCount = rowCount - 1
             productDetail = self.products[rowCount]
             
             cell.dateLabel?.text = productDetail.postedDate?.stringFromDate()
@@ -353,6 +359,10 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
         cell.title?.text = productDetail.name
         if Float(productDetail.price) != nil {
         cell.price?.text = "€ " +   String(format: "%.02f", Float(productDetail.price)!)
+        }
+        else{
+            
+            cell.price?.text = "€ "
         }
          cell.distance?.text = String(format: "%.01f", productDetail.distance) + " km away from you"  //"The velocity is \(productDetail.distance.string(1))"
         cell.productDescription?.text = String(productDetail.productDesc)
@@ -714,10 +724,14 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
         switch sortBy {
         case .DateDesc, .DateAsc:
             let datePro = self.dateSortedProducts[indexPath!.section]
-            productDet = datePro.products![indexPath!.row]
+            let index = self.sortedProductIndex(indexPath!)
+            productDet = datePro.products![index]
             
         default:
-            productDet = self.products[indexPath!.row]
+            var rowIndex = indexPath!.row + 1
+            rowIndex = rowIndex - (rowIndex / (NBPUserHelper.facebookAdAfterRow()+1))
+            rowIndex = rowIndex - 1
+            productDet = self.products[rowIndex]
         }
         
         
@@ -755,7 +769,11 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
             
             
         default:
-            productInfo = self.products[indexPath.row]
+            
+            var rowIndex = indexPath.row + 1
+            rowIndex = rowIndex - (rowIndex / (NBPUserHelper.facebookAdAfterRow()+1))
+            rowIndex = rowIndex - 1
+            productInfo = self.products[rowIndex]
         }
         
         
