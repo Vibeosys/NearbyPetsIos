@@ -8,12 +8,15 @@
 
 import UIKit
 import FBAudienceNetwork
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class NBPBaseViewController: UIViewController {
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        FBSDKAppEvents.activateApp()
 
         // Do any additional setup after loading the view.
     }

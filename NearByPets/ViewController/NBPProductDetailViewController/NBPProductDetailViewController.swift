@@ -205,8 +205,9 @@ class NBPProductDetailViewController: UIViewController,CLLocationManagerDelegate
             
             let adView: FBAdView = FBAdView(placementID:NBPUserHelper.getFacebookPlaementId(), adSize:kFBAdSizeHeight50Banner, rootViewController:self);
             
-            adView.loadAd();
             cell.addSubview(adView);
+            adView.loadAd();
+
             return cell
             
         }else

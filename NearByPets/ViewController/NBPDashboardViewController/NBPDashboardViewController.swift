@@ -17,7 +17,7 @@ import FBAudienceNetwork
     case DateDesc, DateAsc, PriceDesc, PriceAsc, DistanceDesc, DistanceAsc, None
  }
  
-class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegate, VSDropdownDelegate {
+class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegate, VSDropdownDelegate , FBAdViewDelegate {
 
     let imageNames = ["BIRDS.jpg", "CATS.jpg", "DOGS.jpg" , "FOOD.jpg" , "CATS.jpg" ]
     let locationManager = CLLocationManager()
@@ -62,14 +62,16 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
 //        let menuView = BTNavigationDropdownMenu(navigationController: self.navigationController, title: contents.first!, items: contents)
 //        self.navigationItem.titleView = menuView
         
-//        FBAdSettings.addTestDevices(["d5fd182f0cc2f3316d876db62ca786785706868e","193284bd98d9024316a8570fdacffd5a5a671363"])
-        
-//        [FBAdSettings addTestDevice:@"HASHED ID"];
+//        FBAdSettings.addTestDevices(["d5fd182f0cc2f3316d876db62ca786785706868e","193284bd98d9024316a8570fdacffd5a5a671363","92f7e256d471698a5e248ea73193222a7ccddca8"])
         
 //        menuView.didSelectItemAtIndexHandler = {[weak self] (indexPath: Int) -> () in
 //            print("Did select item at index: \(indexPath)")
 ////            self.selectedCellLabel.text = contents[indexPath]
 //        }
+        
+
+        
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -749,6 +751,16 @@ class NBPDashboardViewController: NBPBaseViewController,CLLocationManagerDelegat
             
         })
 
+    }
+    
+     // MARK: - Facebook Ad Delegate
+    
+    func adViewDidLoad(adView: FBAdView){
+        adView.hidden = false
+    }
+
+    func adView(adView: FBAdView, didFailWithError error: NSError){
+        adView.hidden = true
     }
     
     
